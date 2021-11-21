@@ -18,6 +18,8 @@ Application: detailed description of methods used.
 
 ## 3 Experiments
 
+Implement and compare different algorithms to solve a real-world problem.
+
 
 
 ## 4 Results
