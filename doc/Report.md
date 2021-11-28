@@ -1,4 +1,4 @@
-# Implementation of Double Regression Network Single image super-resolution (DRN)
+# **Double Regression Network To Improve Video Super-Resolution**
 
 
 

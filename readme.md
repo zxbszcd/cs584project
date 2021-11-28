@@ -4,12 +4,11 @@
 ```
 Python>=3.7, PyTorch>=1.1, numpy, skimage, imageio, moviepy, matplotlib, tqdm
 ```
-- Model Testing
-  pre-trained models: https://github.com/guoyongcs/DRN/releases
+## Model Testing
 
-  | Model | Scale | #Params (M) | PSNR on Set5 (dB) |
-  | :---: | :---: | :---------: | :---------------: |
-  | DRN-S |   4   |     4.8     |       32.68       |
+| Model | Scale | #Params (M) | PSNR on Set5 (dB) |
+| :---: | :---: | :---------: | :---------------: |
+| DRN-S |   4   |     4.8     |       32.68       |
 
 Put the test video into the input directory, and X2 and X4 videos will be generated in the output directory.
 
@@ -26,8 +25,6 @@ python Test.py --scale 4 --model DRN-S --pre_train premodel/DRNS4x.pt --pre_trai
 ```
 
 Citation
-
-1. https://github.com/guoyongcs/DRN
 
 ```
 @inproceedings{guo2020closed,
