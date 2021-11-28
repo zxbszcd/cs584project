@@ -119,7 +119,6 @@ def make_dual_scheduler(opt, dual_optimizers):
 
     return dual_scheduler
 
-
 def init_model(args):
     # Set the templates here
     if args.model.find('DRN-S') >= 0:

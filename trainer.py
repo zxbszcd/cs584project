@@ -179,12 +179,12 @@ class Trainer():
         sr = self.model(lr_input)
 
         sr_array2 = utility.quantize(sr[1], self.opt.rgb_range)
-        frame_SR2 = sr_array2.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        frame_SR2 = sr_array2.permute(0, 2, 3, 1)  # Convert the dimension and put the color dimension last
         frame_SR2 = np.squeeze(frame_SR2, 0).cpu()
         frame_SR2 = np.array(frame_SR2)
 
         sr_array4 = utility.quantize(sr[2], self.opt.rgb_range)
-        frame_SR4 = sr_array4.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        frame_SR4 = sr_array4.permute(0, 2, 3, 1)
         frame_SR4 = np.squeeze(frame_SR4, 0).cpu()
         frame_SR4 = np.array(frame_SR4)
 
@@ -201,12 +201,12 @@ class Trainer():
         sr = self.model(lr_input)
 
         sr_array2 = utility.quantize(sr[1], self.opt.rgb_range)
-        image_SR2 = sr_array2.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        image_SR2 = sr_array2.permute(0, 2, 3, 1)
         image_SR2 = np.squeeze(image_SR2, 0).cpu()
         image_SR2 = np.array(image_SR2)
 
         sr_array4 = utility.quantize(sr[2], self.opt.rgb_range)
-        image_SR4 = sr_array4.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        image_SR4 = sr_array4.permute(0, 2, 3, 1)
         image_SR4 = np.squeeze(image_SR4, 0).cpu()
         image_SR4 = np.array(image_SR4)
 
