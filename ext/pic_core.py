@@ -27,8 +27,9 @@ def pic_SR(picFolder):
     model_net = model.Model(args, checkpoint)
     t = Trainer(args, loader, model_net, None, checkpoint)
     print("Total: " + str(data_num) + " number pictures")
+    # data_num = 50
     for i in range(data_num):
-        print("Processing " + str(i + 1) + "-th picture", end='\t')
+        print("Processing " + str(i + 1) + "-th picture", end='\r')
         img, file_path = picture_read(picFolder).__getitem__(i)
         image_SR2, image_SR4 = t.transform_picture(file_path)
         file_dir = os.path.dirname(file_path)
@@ -39,5 +40,5 @@ def pic_SR(picFolder):
             os.makedirs(output_path)
         cv2.imwrite(f'{output_path}/{file_name}x2{format}', image_SR2)
         cv2.imwrite(f'{output_path}/{file_name}x4{format}', image_SR4)
-        print("Finish！")
-        torch.cuda.empty_cache()
+    print("Finish！")
+    torch.cuda.empty_cache()

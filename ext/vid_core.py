@@ -30,6 +30,7 @@ def video_SR(videoFolder, fourcc):
         file_path = video_read(videoFolder).__getitem__(n)
         cap = cv2.VideoCapture(file_path)
         frame_num = int(cap.get(7))
+        # frame_num = 50
         weight = int(cap.get(3))
         height = int(cap.get(4))
         fps = cap.get(5)
