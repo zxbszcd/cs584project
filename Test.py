@@ -6,8 +6,10 @@ Desc：Todo
 """
 import cv2
 
+from ext.pic_core import pic_SR
 from ext.vid_core import video_SR
 
 if __name__ == '__main__':
     fourcc = cv2.VideoWriter_fourcc(*'avc1')
     video_SR('./input/', fourcc)
+    # pic_SR('./input/')

@@ -8,11 +8,11 @@ import torch
 from moviepy.editor import VideoFileClip
 
 import data
-from ext.br import get_flag
 from checkpoint import Checkpoint
+from ext.br import get_flag
+from ext.vid_dataset import video_read
 from option import args
 from trainer import Trainer
-from ext.vid_dataset import video_read
 
 checkpoint = Checkpoint(args)
 import model
@@ -27,17 +27,20 @@ def video_SR(videoFolder, fourcc):
     print("Total: " + str(data_num) + "number video")
     for n in range(data_num):
         print("Processing " + str(n + 1) + "-th video")
-        name = video_read(videoFolder).__getitem__(n)
-        cap = cv2.VideoCapture(name)
+        file_path = video_read(videoFolder).__getitem__(n)
+        cap = cv2.VideoCapture(file_path)
         frame_num = int(cap.get(7))
         weight = int(cap.get(3))
         height = int(cap.get(4))
         fps = cap.get(5)
-
-        output_filepath = name.replace('input', 'temp')
-        output_filepath, video_format = os.path.splitext(output_filepath)
-        output_filepath2 = output_filepath + '_x2' + video_format
-        output_filepath4 = output_filepath + '_x4' + video_format
+        file_dir = os.path.dirname(file_path)
+        file_name = os.path.basename(file_path)
+        file_name, video_format = os.path.splitext(file_name)
+        output_dir = file_dir.replace("input", "output")
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        output_filepath2 = output_dir + "/" + file_name + '_x2' + video_format
+        output_filepath4 = output_dir + "/" + file_name + '_x4' + video_format
 
         scale2 = 2
         scale4 = 4
@@ -71,16 +74,14 @@ def video_SR(videoFolder, fourcc):
         out4.release()
 
         videoClip2 = VideoFileClip(output_filepath2)
-        video_clip = VideoFileClip(name)
-        videoClip2 = videoClip2.set_audio(video_clip.audio) # Set audio for video
-        filepath2 = output_filepath2.replace('temp', 'output')
-        videoClip2.write_videofile(filepath2)
+        video_clip = VideoFileClip(file_path)
+        videoClip2 = videoClip2.set_audio(video_clip.audio)  # Set audio for video
+        videoClip2.write_videofile(output_filepath2)
 
         videoClip4 = VideoFileClip(output_filepath4)
-        video_clip = VideoFileClip(name)
+        video_clip = VideoFileClip(file_path)
         videoClip4 = videoClip4.set_audio(video_clip.audio)
-        filepath4 = output_filepath4.replace('temp', 'output')
-        videoClip4.write_videofile(filepath4)
+        videoClip4.write_videofile(output_filepath4)
 
         current = datetime.now()
         print(f"end time：{current}")

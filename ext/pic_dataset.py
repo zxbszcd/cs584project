@@ -1,28 +1,35 @@
 import os
 
+import cv2
+import numpy
+import torch
 from torch.utils.data import Dataset
 
 from ext import check_file_format
 
 
-class video_read(Dataset):
-    def __init__(self, videofolder):
-        self.videofolder = videofolder
-        videos = []
-        for item in self.getAllFiles(videofolder):
+class picture_read(Dataset):
+    def __init__(self, imageFolder):
+        self.imageFolder = imageFolder
+        prictures = []
+        for item in self.getAllFiles(imageFolder):
             name, format = os.path.splitext(item)
             format = format.replace(".", "")
-            if (format in check_file_format.video_format_list):
-                videos.append(item)
-        self.videos = videos
+            if (format in check_file_format.picture_format_list):
+                prictures.append(item)
+        self.images = prictures
         self.__check_folder()
 
     def __len__(self):
-        return len(self.videos)
+        return len(self.images)
 
     def __getitem__(self, index):
-        name = self.videos[index]
-        return name
+        name = self.images[index]
+        image = cv2.imdecode(numpy.fromfile(name, dtype=numpy.uint8), -1)  # 防止图片中文名称乱码
+        image = numpy.array(image, dtype='float32')
+        image = torch.from_numpy(image)
+        image = image.permute(2, 0, 1).unsqueeze(0)
+        return image, name
 
     def __check_folder(self):
         if not os.path.exists("./output/"):

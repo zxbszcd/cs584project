@@ -189,6 +189,28 @@ class Trainer():
 
         return frame_SR2, frame_SR4
 
+    @torch.no_grad()
+    def transform_picture(self, file_path):
+        self.model.eval()
+        lr_array = imageio.imread(file_path)
+        lr, _ = common.set_channel([lr_array], lr_array, n_channels=3)
+        lr_tensor, _ = common.np2Tensor(lr, lr[0], rgb_range=255)
+        lr_tensor = self.prepare(lr_tensor)
+        lr_input = torch.stack(lr_tensor[0])
+        sr = self.model(lr_input)
+
+        sr_array2 = utility.quantize(sr[1], self.opt.rgb_range)
+        image_SR2 = sr_array2.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        image_SR2 = np.squeeze(image_SR2, 0).cpu()
+        image_SR2 = np.array(image_SR2)
+
+        sr_array4 = utility.quantize(sr[2], self.opt.rgb_range)
+        image_SR4 = sr_array4.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+        image_SR4 = np.squeeze(image_SR4, 0).cpu()
+        image_SR4 = np.array(image_SR4)
+
+        return image_SR2, image_SR4
+
     def prepare(self, *args):
         device = torch.device('cpu' if self.opt.cpu else 'cuda')
 
