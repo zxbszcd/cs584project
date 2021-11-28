@@ -56,6 +56,11 @@ def video_SR(videoFolder, fourcc):
             ret, frame = cap.read()
             print("The video has a total of " + str(frame_num) + " frames，Processing " + str(i) + "frame", end="\r")
             frame = numpy.array(frame, dtype='float32')
+            cv2.imwrite(f'./temp/tmp.bmp', frame)
+            # sr_array2 = utility.quantize(frame, self.opt.rgb_range)
+            # frame_SR2 = sr_array2.permute(0, 2, 3, 1)  # 转换维度，把颜色维度放在最后
+            # frame_SR2 = np.squeeze(frame_SR2, 0).cpu()
+            # frame_SR2 = np.array(frame_SR2)
             if frame.size == 1:
                 print("\nProcessing frame. This frame is empty and will exit")
                 break
@@ -84,8 +89,7 @@ def video_SR(videoFolder, fourcc):
         videoClip4 = videoClip4.set_audio(video_clip.audio)
         videoClip4.write_videofile(output_filepath4)
 
-        current = datetime.now()
-        print(f"end time：{current}")
+        print(f"take time：{datetime.now() - current}")
 
         # del_temp()
         print("Finish!")

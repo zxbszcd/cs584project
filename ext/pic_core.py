@@ -43,7 +43,6 @@ def pic_SR(picFolder):
             os.makedirs(output_path)
         cv2.imwrite(f'{output_path}/{file_name}x2{format}', image_SR2)
         cv2.imwrite(f'{output_path}/{file_name}x4{format}', image_SR4)
-    current = datetime.now()
-    print(f"start time：{current}")
+    print(f"take time：{datetime.now() - current}")
     print("Finish！")
     torch.cuda.empty_cache()

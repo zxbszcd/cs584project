@@ -13,9 +13,12 @@ from ext.pic_core import pic_SR
 from ext.vid_core import video_SR
 
 
-def main():
+def test_video():
     fourcc = cv2.VideoWriter_fourcc(*'avc1')
     video_SR('./input/', fourcc)
+
+
+def test_picture():
     pic_SR('./input/')
 
 
@@ -27,5 +30,10 @@ def show_time():
 
 
 if __name__ == '__main__':
-    cProfile.run('main()', 'restats')
+    # test_video()
+    # test_picture()
+
+    cProfile.run('test_video()', 'restats')
     show_time()
+    # cProfile.run('test_picture()', 'restats')
+    # show_time()
