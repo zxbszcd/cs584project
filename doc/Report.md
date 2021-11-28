@@ -63,7 +63,7 @@ Figure 3.5
 
 ![image-20211128223318186](images\image-20211128223318186.png)
 
-图3.6
+Figure 3.6
 
 ## 5 Results
 
