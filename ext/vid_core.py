@@ -19,14 +19,14 @@ import model
 
 
 def video_SR(videoFolder, fourcc):
-    del_temp()  # 先清理一次临时文件夹
+    del_temp()  # Clean up the temporary folder first
     data_num = video_read(videoFolder).__len__()
     loader = data.Data(args)
     model_net = model.Model(args, checkpoint)
     t = Trainer(args, loader, model_net, None, checkpoint)
-    print("一共有" + str(data_num) + "个视频")
+    print("Total: " + str(data_num) + "number video")
     for n in range(data_num):
-        print("正在处理第" + str(n + 1) + "个视频")
+        print("Processing " + str(n + 1) + "-th video")
         name = video_read(videoFolder).__getitem__(n)
         cap = cv2.VideoCapture(name)
         frame_num = int(cap.get(7))
@@ -50,10 +50,10 @@ def video_SR(videoFolder, fourcc):
             if get_flag():
                 break
             ret, frame = cap.read()
-            print("该视频一共" + str(frame_num) + "帧，正在处理第" + str(i) + "帧", end="\r")
+            print("The video has a total of " + str(frame_num) + " frames，Processing " + str(i) + "frame", end="\r")
             frame = numpy.array(frame, dtype='float32')
             if frame.size == 1:
-                print("\n此帧为空，即将退出")
+                print("\nProcessing frame. This frame is empty and will exit")
                 break
             frame_SR2, frame_SR4 = t.transform_frame(frame)
             cv2.imwrite(f'./temp/tmp_x2.bmp', frame_SR2)
@@ -70,15 +70,15 @@ def video_SR(videoFolder, fourcc):
         out2.release()
         out4.release()
 
-        videoClip2 = VideoFileClip(output_filepath2)  # 设置视频的音频
+        videoClip2 = VideoFileClip(output_filepath2)
         video_clip = VideoFileClip(name)
-        videoClip2 = videoClip2.set_audio(video_clip.audio)  # 保存新的视频文件
+        videoClip2 = videoClip2.set_audio(video_clip.audio) # Set audio for video
         filepath2 = output_filepath2.replace('temp', 'output')
         videoClip2.write_videofile(filepath2)
 
-        videoClip4 = VideoFileClip(output_filepath4)  # 设置视频的音频
+        videoClip4 = VideoFileClip(output_filepath4)
         video_clip = VideoFileClip(name)
-        videoClip4 = videoClip4.set_audio(video_clip.audio)  # 保存新的视频文件
+        videoClip4 = videoClip4.set_audio(video_clip.audio)
         filepath4 = output_filepath4.replace('temp', 'output')
         videoClip4.write_videofile(filepath4)
 
@@ -86,14 +86,14 @@ def video_SR(videoFolder, fourcc):
         print(f"end time：{current}")
 
         # del_temp()
-        print("完成!")
+        print("Finish!")
         torch.cuda.empty_cache()
 
 
 def del_temp():
     tmp_file = Path("./temp")
     if tmp_file.exists():
-        del_list = os.listdir('./temp')  # 清理临时文件
+        del_list = os.listdir('./temp')  #
         for file in del_list:
             file_path = os.path.join('./temp/', file)
             if os.path.isfile(file_path):
