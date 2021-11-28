@@ -4,6 +4,7 @@ Create Time: 2021/11/28 17:50
 Author: Eric
 Desc：Todo
 """
+from datetime import datetime
 import os
 
 import cv2
@@ -28,6 +29,8 @@ def pic_SR(picFolder):
     t = Trainer(args, loader, model_net, None, checkpoint)
     print("Total: " + str(data_num) + " number pictures")
     # data_num = 50
+    current = datetime.now()
+    print(f"start time：{current}")
     for i in range(data_num):
         print("Processing " + str(i + 1) + "-th picture", end='\r')
         img, file_path = picture_read(picFolder).__getitem__(i)
@@ -40,5 +43,7 @@ def pic_SR(picFolder):
             os.makedirs(output_path)
         cv2.imwrite(f'{output_path}/{file_name}x2{format}', image_SR2)
         cv2.imwrite(f'{output_path}/{file_name}x4{format}', image_SR4)
+    current = datetime.now()
+    print(f"start time：{current}")
     print("Finish！")
     torch.cuda.empty_cache()
