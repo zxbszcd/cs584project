@@ -30,10 +30,10 @@ def show_time():
 
 
 if __name__ == '__main__':
-    # test_video()
+    test_video()
     # test_picture()
 
-    cProfile.run('test_video()', 'restats')
-    show_time()
+    # cProfile.run('test_video()', 'restats')
+    # show_time()
     # cProfile.run('test_picture()', 'restats')
     # show_time()
