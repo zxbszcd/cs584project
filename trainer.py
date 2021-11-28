@@ -201,14 +201,19 @@ class Trainer():
         sr = self.model(lr_input)
 
         sr_array2 = utility.quantize(sr[1], self.opt.rgb_range)
-        image_SR2 = sr_array2.permute(0, 2, 3, 1)
-        image_SR2 = np.squeeze(image_SR2, 0).cpu()
-        image_SR2 = np.array(image_SR2)
+        normalized2 = sr_array2[0].data.mul(255 / self.opt.rgb_range)
+        image_SR2 = normalized2.byte().permute(1, 2, 0).cpu().numpy()
+
+        # image_SR2 = sr_array2.permute(0, 2, 3, 1)
+        # image_SR2 = np.squeeze(image_SR2, 0).cpu()
+        # image_SR2 = np.array(image_SR2)
 
         sr_array4 = utility.quantize(sr[2], self.opt.rgb_range)
-        image_SR4 = sr_array4.permute(0, 2, 3, 1)
-        image_SR4 = np.squeeze(image_SR4, 0).cpu()
-        image_SR4 = np.array(image_SR4)
+        normalized4 = sr_array4[0].data.mul(255 / self.opt.rgb_range)
+        image_SR4 = normalized4.byte().permute(1, 2, 0).cpu().numpy()
+        # image_SR4 = sr_array4.permute(0, 2, 3, 1)
+        # image_SR4 = np.squeeze(image_SR4, 0).cpu()
+        # image_SR4 = np.array(image_SR4)
 
         return image_SR2, image_SR4
 

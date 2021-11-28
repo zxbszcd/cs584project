@@ -4,10 +4,10 @@ Create Time: 2021/11/28 17:50
 Author: Eric
 Desc：Todo
 """
-from datetime import datetime
 import os
+from datetime import datetime
 
-import cv2
+import imageio
 import torch
 
 import data
@@ -41,8 +41,11 @@ def pic_SR(picFolder):
         output_path = file_dir.replace("input", "output")
         if not os.path.exists(output_path):
             os.makedirs(output_path)
-        cv2.imwrite(f'{output_path}/{file_name}x2{format}', image_SR2)
-        cv2.imwrite(f'{output_path}/{file_name}x4{format}', image_SR4)
+        imageio.imwrite(f"{output_path}/{file_name}x2{format}", image_SR2)
+        imageio.imwrite(f"{output_path}/{file_name}x4{format}", image_SR4)
+        # cv2.imwrite(f'{output_path}/{file_name}x2{format}', image_SR2)
+        # cv2.imwrite(f'{output_path}/{file_name}x4{format}', image_SR4)
+
     print(f"take time：{datetime.now() - current}")
     print("Finish！")
     torch.cuda.empty_cache()
