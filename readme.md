@@ -10,7 +10,7 @@ Python>=3.7, PyTorch>=1.1, numpy, skimage, imageio, moviepy, matplotlib, tqdm
 | :---: | :---: | :---------: | :---------------: |
 | DRN-S |   4   |     4.8     |       32.68       |
 
-Put the test video into the input directory, and X2 and X4 videos will be generated in the output directory.
+Put the test video into the “input” directory, and X2 and X4 videos will be generated in the output directory.
 
 For example, use the following command to test our DRN-S model for 4x SR.
 
